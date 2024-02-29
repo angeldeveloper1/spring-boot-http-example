@@ -47,4 +47,27 @@ public class EstudianteService {
 
         estudianteRepository.deleteEstudiante(estudianteId);
     }
+
+    public void updateEstudiante(Long id, Estudiante estudianteActualizar){
+
+        // check si Id existe, si no imprimimos Warining
+//        boolean existe = false;
+//        for (Estudiante e : getEstudiantes()) {
+//            if (e.getId().equals(id)) {
+//                existe = true;
+//                break;
+//            }
+//        }
+//
+        boolean existe = getEstudiantes().stream().anyMatch(e -> e.getId().equals(id));
+
+        if (!existe){
+            System.out.println("WARNING: El estudiante con ese id no existe.");
+            return;
+        }
+
+
+        estudianteRepository.updateEstudiante(id, estudianteActualizar);
+    }
+
 }

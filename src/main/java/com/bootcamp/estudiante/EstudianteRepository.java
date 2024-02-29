@@ -39,6 +39,15 @@ public class EstudianteRepository {
 //        }
 
         estudiante.removeIf(e -> e.getId().equals(estudianteId));
-
     }
+
+    public void updateEstudiante(Long id, Estudiante estudianteActualizar){
+        for (Estudiante e: estudiante) {
+            if(e.getId().equals(id)) {
+                e.setId(estudianteActualizar.getId());
+                e.setNombre(estudianteActualizar.getNombre());
+            }
+        }
+    }
+
 }
