@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Estudiante {
 
-    private long id;
+    private Long id;
     private String nombre;
 
-    public Estudiante(long id, String nombre) {
+    public Estudiante(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

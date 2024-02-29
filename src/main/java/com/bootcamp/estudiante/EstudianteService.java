@@ -30,4 +30,21 @@ public class EstudianteService {
         System.out.println("Service create estudiante exited");
     }
 
+    public void deleteEstudiante(Long estudianteId) {
+        // check si Id existe, si no imprimimos Warining
+        boolean existe = false;
+        for (Estudiante e : getEstudiantes()) {
+            if (e.getId().equals(estudianteId)) {
+                existe = true;
+                break;
+            }
+        }
+
+        if (!existe){
+            System.out.println("WARNING: El estudiante con ese id no existe.");
+            return;
+        }
+
+        estudianteRepository.deleteEstudiante(estudianteId);
+    }
 }

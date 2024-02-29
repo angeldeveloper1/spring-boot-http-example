@@ -12,10 +12,10 @@ public class EstudianteRepository {
 
     public EstudianteRepository() {
         this.estudiante = new ArrayList<Estudiante>();
-                estudiante.add(new Estudiante(1L,"Angel"));
-                estudiante.add(new Estudiante(2L,"Maria"));
-                estudiante.add(new Estudiante(3L,"Juan"));
-                estudiante.add(new Estudiante(4L,"Jefferson"));
+        estudiante.add(new Estudiante(1L, "Angel"));
+        estudiante.add(new Estudiante(2L, "Maria"));
+        estudiante.add(new Estudiante(3L, "Juan"));
+        estudiante.add(new Estudiante(4L, "Jefferson"));
     }
 
     public List<Estudiante> getEstudiantes() {
@@ -29,4 +29,16 @@ public class EstudianteRepository {
     }
 
 
+    public void deleteEstudiante(Long estudianteId) {
+//        for (int i = 0; i < estudiante.size(); i++) {
+//            Estudiante currentEstudiante = estudiante.get(i);
+//            if (currentEstudiante.getId().equals(estudianteId)) {
+//                estudiante.remove(i);
+//                break;
+//            }
+//        }
+
+        estudiante.removeIf(e -> e.getId().equals(estudianteId));
+
+    }
 }
