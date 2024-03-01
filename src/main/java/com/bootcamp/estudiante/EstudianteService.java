@@ -70,4 +70,7 @@ public class EstudianteService {
         estudianteRepository.updateEstudiante(id, estudianteActualizar);
     }
 
+    public Estudiante getEstudiante(Long id) {
+        return estudianteRepository.getEstudiante(id);
+    }
 }

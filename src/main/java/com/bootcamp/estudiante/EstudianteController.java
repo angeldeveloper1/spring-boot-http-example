@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("estudiante")
 public class EstudianteController {
 
     private EstudianteService estudianteService;
@@ -14,24 +15,29 @@ public class EstudianteController {
         this.estudianteService = estudianteService;
     }
 
-    @GetMapping("/estudiante")
+    @GetMapping
     public List<Estudiante> getEstudiantes() {
         return estudianteService.getEstudiantes();
     }
 
-    @PostMapping("/crear-estudiante")
+    @GetMapping("{id}")
+    public Estudiante getEstudiante(@PathVariable Long id) {
+        return estudianteService.getEstudiante(id);
+    }
+
+    @PostMapping
     public void createEstudiante(@RequestBody Estudiante e) {
         System.out.println("Controller create estudiante entered");
         estudianteService.createEstudiante(e);
         System.out.println("Controller create estudiante exited");
     }
 
-    @DeleteMapping("/borrar-estudiante/{id}")
+    @DeleteMapping("{id}")
     public void deleteEstudiante(@PathVariable("id") Long estudianteId) {
         estudianteService.deleteEstudiante(estudianteId);
     }
 
-    @PutMapping("/actualizar-estudiante/{id}")
+    @PutMapping("{id}")
     public void updateEstudiante(@PathVariable("id") Long estudianteId, @RequestBody Estudiante estudiante) {
         estudianteService.updateEstudiante(estudianteId, estudiante);
     }

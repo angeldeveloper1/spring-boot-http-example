@@ -50,4 +50,17 @@ public class EstudianteRepository {
         }
     }
 
+    public Estudiante getEstudiante(Long id) {
+//        for (Estudiante e : estudiante) {
+//            if (e.getId().equals(id)) {
+//                return e;
+//            }
+//        }
+//        throw new IllegalStateException("No se encontro el estudiante con ese id");
+
+        return estudiante.stream()
+                .filter(estudiante -> estudiante.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No se encontro el estudiante con ese id"));
+    }
 }

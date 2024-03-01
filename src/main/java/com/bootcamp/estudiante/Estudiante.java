@@ -33,7 +33,7 @@ public class Estudiante {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Estudiante that = (Estudiante) o;
-        return id == that.id && Objects.equals(nombre, that.nombre);
+        return Objects.equals(id, that.id) && Objects.equals(nombre, that.nombre);
     }
 
     @Override
