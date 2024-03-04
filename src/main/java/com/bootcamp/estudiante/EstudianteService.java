@@ -11,12 +11,10 @@ import java.util.regex.Pattern;
 @Service
 public class EstudianteService {
 
-    private EstudianteRepositoryMentiras estudianteRepositoryMentiras;
     private EstudianteRepository estudianteRepository;
 
     @Autowired
-    public EstudianteService(EstudianteRepositoryMentiras estudianteRepositoryMentiras, EstudianteRepository estudianteRepository) {
-        this.estudianteRepositoryMentiras = estudianteRepositoryMentiras;
+    public EstudianteService(EstudianteRepository estudianteRepository) {
         this.estudianteRepository = estudianteRepository;
     }
 
