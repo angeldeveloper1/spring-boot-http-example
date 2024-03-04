@@ -25,6 +25,13 @@ public class EstudianteService {
         return estudiante;
     }
 
+    public List<Estudiante> findEstudiantesByPrimerNombreOrPrimerApellido(String primerNombre, String primerApellido) {
+        List<Estudiante> estudiante = estudianteRepository.findEstudianteByPrimerNombreOrPrimerApellido(primerNombre,primerApellido);
+        //Logica de negocio
+
+        return estudiante;
+    }
+
     public void createEstudiante(Estudiante e) {
         // check si el email es valido
         if (!checkValidezEmail(e.getEmail())) {
