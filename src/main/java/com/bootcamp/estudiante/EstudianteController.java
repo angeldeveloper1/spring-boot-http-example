@@ -22,7 +22,7 @@ public class EstudianteController {
     ) {
 
         if (primerNombre != null || primerApellido != null){
-            return estudianteService.findEstudiantesByPrimerNombreOrPrimerApellido(primerNombre,primerApellido);
+            return estudianteService.getEstudiantesByPrimerNombreOrPrimerApellido(primerNombre,primerApellido);
         }
 
         return estudianteService.getAllEstudiantes();

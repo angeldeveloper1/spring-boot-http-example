@@ -2,12 +2,13 @@ package com.bootcamp.estudiante;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
-
+@Transactional
 @Service
 public class EstudianteService {
 
@@ -18,6 +19,7 @@ public class EstudianteService {
         this.estudianteRepository = estudianteRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Estudiante> getAllEstudiantes() {
         List<Estudiante> estudiante = estudianteRepository.findAll();
         //Logica de negocio
@@ -25,7 +27,8 @@ public class EstudianteService {
         return estudiante;
     }
 
-    public List<Estudiante> findEstudiantesByPrimerNombreOrPrimerApellido(String primerNombre, String primerApellido) {
+    @Transactional(readOnly = true)
+    public List<Estudiante> getEstudiantesByPrimerNombreOrPrimerApellido(String primerNombre, String primerApellido) {
         List<Estudiante> estudiante = estudianteRepository.findEstudianteByPrimerNombreOrPrimerApellido(primerNombre,primerApellido);
         //Logica de negocio
 
@@ -65,12 +68,23 @@ public class EstudianteService {
         estudianteRepository.deleteById(estudianteId);
     }
 
+
+    @Transactional
     public Estudiante updateEstudiante(Long id, Estudiante estudianteActualizar){
 
         // check si estudiante con ese id existe, si no botamos un error
 
         Estudiante estudianteExistente = estudianteRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + id));
+
+
+        // Actualizar estudiante
+        estudianteExistente.setPrimerNombre(estudianteActualizar.getPrimerNombre());
+        estudianteExistente.setSegundoNombre(estudianteActualizar.getSegundoNombre());
+        estudianteExistente.setPrimerApellido(estudianteActualizar.getPrimerApellido());
+        estudianteExistente.setSegundoApellido(estudianteActualizar.getSegundoApellido());
+        estudianteExistente.setFechaNacimiento(estudianteActualizar.getFechaNacimiento());
+
 
         // check si el email es valido
 
@@ -88,17 +102,14 @@ public class EstudianteService {
 
         // actualizar estudiante
 
-        estudianteExistente.setPrimerNombre(estudianteActualizar.getPrimerNombre());
-        estudianteExistente.setSegundoNombre(estudianteActualizar.getSegundoNombre());
-        estudianteExistente.setPrimerApellido(estudianteActualizar.getPrimerApellido());
-        estudianteExistente.setSegundoApellido(estudianteActualizar.getSegundoApellido());
-        estudianteExistente.setFechaNacimiento(estudianteActualizar.getFechaNacimiento());
+        // actualizar email
         estudianteExistente.setEmail(estudianteActualizar.getEmail());
 
-        return estudianteRepository.save(estudianteExistente);
+        return estudianteExistente;
 
     }
 
+    @Transactional(readOnly = true)
     public Estudiante getEstudiante(Long id) {
         return estudianteRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + id));
