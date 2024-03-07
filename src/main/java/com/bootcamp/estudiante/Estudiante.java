@@ -2,9 +2,11 @@ package com.bootcamp.estudiante;
 
 import com.bootcamp.cuenta.CuentaBancaria;
 import com.bootcamp.libro.Libro;
+import com.bootcamp.materia.Materia;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +46,23 @@ public class Estudiante {
     )
     private CuentaBancaria cuenta;
     @OneToMany(mappedBy = "estudiante")
-    private List<Libro> libros;
+    private List<Libro> libros = new ArrayList<>();
+
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "inscripciones",
+            joinColumns = @JoinColumn(
+                    name = "estudiante_id",
+                    referencedColumnName = "id_estudiante"
+            ),
+            inverseJoinColumns = @JoinColumn(
+            name = "materia_id",
+            referencedColumnName = "id_materia"
+            )
+    )
+    private List<Materia> materias = new ArrayList<>();
 
     public Estudiante() {
     }
@@ -59,12 +77,31 @@ public class Estudiante {
         this.email = email;
     }
 
+    public List<Materia> getMaterias() {
+        return materias;
+    }
+
+    public void addMateria(Materia materia) {
+        if (!materias.contains(materia)) {
+            materias.add(materia);
+        }
+    }
+
+    public void removeMateria(Materia materia){
+        materias.remove(materia);
+    }
+
     public List<Libro> getLibros() {
         return libros;
     }
 
-    public void setLibros(List<Libro> libros) {
-        this.libros = libros;
+    public void addLibro(Libro libro) {
+        if (!libros.contains(libro)) {
+            libros.add(libro);
+        }
+    }
+    public void removeLibro(Libro libro){
+        libros.remove(libro);
     }
 
     public CuentaBancaria getCuenta() {
