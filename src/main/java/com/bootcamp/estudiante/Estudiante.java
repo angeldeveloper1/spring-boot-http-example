@@ -1,9 +1,11 @@
 package com.bootcamp.estudiante;
 
 import com.bootcamp.cuenta.CuentaBancaria;
+import com.bootcamp.libro.Libro;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -41,7 +43,8 @@ public class Estudiante {
             unique = true
     )
     private CuentaBancaria cuenta;
-
+    @OneToMany(mappedBy = "estudiante")
+    private List<Libro> libros;
 
     public Estudiante() {
     }
@@ -55,6 +58,15 @@ public class Estudiante {
         this.fechaNacimiento = fechaNacimiento;
         this.email = email;
     }
+
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
+    }
+
     public CuentaBancaria getCuenta() {
         return cuenta;
     }
