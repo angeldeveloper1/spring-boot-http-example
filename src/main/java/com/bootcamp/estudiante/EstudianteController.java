@@ -3,6 +3,9 @@ package com.bootcamp.estudiante;
 import com.bootcamp.libro.Libro;
 import com.bootcamp.materia.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,12 +25,19 @@ public class EstudianteController {
             @RequestParam(value = "primerNombre", required = false) String primerNombre,
             @RequestParam(value = "primerApellido", required = false) String primerApellido
     ) {
-
         if (primerNombre != null || primerApellido != null){
             return estudianteService.getEstudiantesByPrimerNombreOrPrimerApellido(primerNombre,primerApellido);
         }
 
         return estudianteService.getAllEstudiantes();
+    }
+    // este metodo podria reemplazar a la lista de Estudiante getEstudiantes
+    @GetMapping("/paged")
+    public Page<Estudiante> getEstudiantes(@PageableDefault(size = 3, page = 0)Pageable pageable) {
+        // size = tamano pagina
+        // size = numero pagina
+        // sort = orden sobre alguno de los atributos, podemos agregar direccion ASC, DESC
+        return estudianteService.findAllEstudiantes(pageable);
     }
 
     @GetMapping("{id}")
