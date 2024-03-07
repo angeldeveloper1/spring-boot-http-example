@@ -86,10 +86,13 @@ public class EstudianteService {
 
 
         // Actualizar estudiante
-        estudianteExistente.setPrimerNombre(estudianteActualizar.getPrimerNombre());
-        estudianteExistente.setSegundoNombre(estudianteActualizar.getSegundoNombre());
-        estudianteExistente.setPrimerApellido(estudianteActualizar.getPrimerApellido());
-        estudianteExistente.setSegundoApellido(estudianteActualizar.getSegundoApellido());
+        Nombre nombre = new Nombre();
+
+        nombre.setPrimerNombre(estudianteActualizar.getNombre().getPrimerNombre());
+        nombre.setSegundoNombre(estudianteActualizar.getNombre().getSegundoNombre());
+        nombre.setPrimerApellido(estudianteActualizar.getNombre().getPrimerApellido());
+        nombre.setSegundoApellido(estudianteActualizar.getNombre().getSegundoApellido());
+        estudianteExistente.setNombre(nombre);
         estudianteExistente.setFechaNacimiento(estudianteActualizar.getFechaNacimiento());
 
 

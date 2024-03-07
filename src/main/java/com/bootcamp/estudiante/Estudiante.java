@@ -25,14 +25,8 @@ public class Estudiante {
             generator = "sequence_estudiante"
     )
     private Long id;
-    @Column(name = "primer_nombre", length = 300, nullable = false)
-    private String primerNombre;
-    @Column(name = "segundo_nombre")
-    private String segundoNombre;
-    @Column(name = "primer_apellido")
-    private String primerApellido;
-    @Column(name = "segundo_apellido")
-    private String segundoApellido;
+    @Embedded
+    private Nombre nombre;
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
     @Column(name = "email", nullable = false, unique = true)
@@ -67,14 +61,14 @@ public class Estudiante {
     public Estudiante() {
     }
 
-    public Estudiante(Long id, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, String email) {
+    public Estudiante(Long id, Nombre nombre, LocalDate fechaNacimiento, String email, CuentaBancaria cuenta, List<Libro> libros, List<Materia> materias) {
         this.id = id;
-        this.primerNombre = primerNombre;
-        this.segundoNombre = segundoNombre;
-        this.primerApellido = primerApellido;
-        this.segundoApellido = segundoApellido;
+        this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.email = email;
+        this.cuenta = cuenta;
+        this.libros = libros;
+        this.materias = materias;
     }
 
     public List<Materia> getMaterias() {
@@ -89,6 +83,14 @@ public class Estudiante {
 
     public void removeMateria(Materia materia){
         materias.remove(materia);
+    }
+
+    public Nombre getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(Nombre nombre) {
+        this.nombre = nombre;
     }
 
     public List<Libro> getLibros() {
@@ -120,37 +122,7 @@ public class Estudiante {
         this.id = id;
     }
 
-    public String getPrimerNombre() {
-        return primerNombre;
-    }
 
-    public void setPrimerNombre(String primerNombre) {
-        this.primerNombre = primerNombre;
-    }
-
-    public String getSegundoNombre() {
-        return segundoNombre;
-    }
-
-    public void setSegundoNombre(String segundoNombre) {
-        this.segundoNombre = segundoNombre;
-    }
-
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
-
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
-    }
 
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
@@ -173,24 +145,24 @@ public class Estudiante {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Estudiante that = (Estudiante) o;
-        return Objects.equals(id, that.id) && Objects.equals(primerNombre, that.primerNombre) && Objects.equals(segundoNombre, that.segundoNombre) && Objects.equals(primerApellido, that.primerApellido) && Objects.equals(segundoApellido, that.segundoApellido) && Objects.equals(fechaNacimiento, that.fechaNacimiento) && Objects.equals(email, that.email);
+        return Objects.equals(id, that.id) && Objects.equals(nombre, that.nombre) && Objects.equals(fechaNacimiento, that.fechaNacimiento) && Objects.equals(email, that.email) && Objects.equals(cuenta, that.cuenta) && Objects.equals(libros, that.libros) && Objects.equals(materias, that.materias);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, email);
+        return Objects.hash(id, nombre, fechaNacimiento, email, cuenta, libros, materias);
     }
 
     @Override
     public String toString() {
         return "Estudiante{" +
                 "id=" + id +
-                ", primerNombre='" + primerNombre + '\'' +
-                ", segundoNombre='" + segundoNombre + '\'' +
-                ", primerApellido='" + primerApellido + '\'' +
-                ", segundoApellido='" + segundoApellido + '\'' +
+                ", nombre=" + nombre +
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", email='" + email + '\'' +
+                ", cuenta=" + cuenta +
+                ", libros=" + libros +
+                ", materias=" + materias +
                 '}';
     }
 }
