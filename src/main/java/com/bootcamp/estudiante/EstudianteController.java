@@ -46,10 +46,8 @@ public class EstudianteController {
     }
 
     @PostMapping
-    public void createEstudiante(@RequestBody Estudiante e) {
-        System.out.println("Controller create estudiante entered");
-        estudianteService.createEstudiante(e);
-        System.out.println("Controller create estudiante exited");
+    public Long createEstudiante(@RequestBody Estudiante e) {
+        return estudianteService.createEstudiante(e);
     }
 
     @DeleteMapping("{id}")

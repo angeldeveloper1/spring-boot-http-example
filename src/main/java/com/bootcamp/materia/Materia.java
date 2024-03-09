@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "materia")
 public class Materia {
 
     @Id
@@ -18,7 +19,10 @@ public class Materia {
             generator = "sequence_materia"
     )
     private Long id;
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "creditos")
     private Integer creditos;
 
     public Materia() {
