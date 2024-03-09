@@ -32,4 +32,14 @@ public class MateriaController {
         return materiaService.createMateria(materia);
     }
 
+    @PutMapping({"materiaId"})
+    public Materia updateMateria(@PathVariable Long materiaId, @RequestBody Materia materia){
+        return materiaService.updateMateria(materiaId,materia);
+    }
+
+    @DeleteMapping({"materiaId"})
+    public void deleteMateria(@PathVariable Long materiaId){
+        materiaService.deleteMateria(materiaId);
+    }
+
 }

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface MateriaRepository extends JpaRepository<Materia,Long> {
 
     boolean existsByNombre(String nombre);
+
+    boolean existsByNombreAndIdIsNot(String nombre, Long id);
 }

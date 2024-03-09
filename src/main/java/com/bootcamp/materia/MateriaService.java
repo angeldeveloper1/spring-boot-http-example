@@ -32,10 +32,34 @@ public class MateriaService {
     }
 
     public Long createMateria(Materia materia) {
-        if (materiaRepository.existsByNombre(materia.getNombre())) {
+        boolean nombreExiste = materiaRepository.existsByNombre(materia.getNombre());
+        if (nombreExiste) {
             throw new IllegalArgumentException("Materia: " +materia.getNombre() + " ya existe.");
         }
 
         return materiaRepository.save(materia).getId();
+    }
+
+    @Transactional
+    public Materia updateMateria(Long materiaId, Materia materiaActualizar) {
+        Materia materiaExiste = materiaRepository.findById(materiaId)
+                .orElseThrow(() -> new NoSuchElementException("No existe esa materia. ID: " + materiaId));
+
+        boolean nombreExiste = materiaRepository.existsByNombreAndIdIsNot(materiaActualizar.getNombre(),materiaId);
+        if (nombreExiste) {
+            throw new IllegalArgumentException("Materia: " +materiaActualizar.getNombre() + " ya existe.");
+        }
+        materiaExiste.setNombre(materiaActualizar.getNombre());
+        materiaExiste.setCreditos(materiaActualizar.getCreditos());
+
+        return materiaExiste;
+    }
+
+    public void deleteMateria(Long materiaId) {
+        boolean materiaExiste = materiaRepository.existsById(materiaId);
+        if (!materiaExiste){
+            throw new NoSuchElementException("Materia con id: " +materiaId +" no existe. No se puede borrar algo que no existe");
+        }
+        materiaRepository.deleteById(materiaId);
     }
 }
