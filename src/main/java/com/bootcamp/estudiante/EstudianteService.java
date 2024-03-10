@@ -59,7 +59,6 @@ public class EstudianteService {
         if (emailExiste) {
             throw new IllegalArgumentException("Email " + e.getEmail() + " ya esta registrado");
         }
-
         return estudianteRepository.save(e).getId();
     }
 

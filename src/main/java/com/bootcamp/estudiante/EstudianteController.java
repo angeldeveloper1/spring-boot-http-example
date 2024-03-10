@@ -2,10 +2,13 @@ package com.bootcamp.estudiante;
 
 import com.bootcamp.libro.Libro;
 import com.bootcamp.materia.Materia;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,13 +49,15 @@ public class EstudianteController {
     }
 
     @PostMapping
-    public Long createEstudiante(@RequestBody Estudiante e) {
-        return estudianteService.createEstudiante(e);
+    public ResponseEntity<Long> createEstudiante(@RequestBody Estudiante e) {
+        Long idEstudiante = estudianteService.createEstudiante(e);
+        return new ResponseEntity<>(idEstudiante, HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
-    public void deleteEstudiante(@PathVariable("id") Long estudianteId) {
+    public ResponseEntity<?> deleteEstudiante(@PathVariable("id") Long estudianteId) {
         estudianteService.deleteEstudiante(estudianteId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("{id}")
