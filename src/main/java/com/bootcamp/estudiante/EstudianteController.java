@@ -3,6 +3,8 @@ package com.bootcamp.estudiante;
 import com.bootcamp.libro.Libro;
 import com.bootcamp.materia.Materia;
 import org.apache.coyote.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequestMapping("api/v1/estudiante")
 public class EstudianteController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EstudianteController.class);
     private EstudianteService estudianteService;
     @Autowired
     public EstudianteController(EstudianteService estudianteService) {
