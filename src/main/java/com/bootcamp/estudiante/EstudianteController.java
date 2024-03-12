@@ -11,12 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/estudiante")
+@PreAuthorize("hasAnyRole('COOR', 'ADMIN')")
 public class EstudianteController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EstudianteController.class);
@@ -27,6 +29,7 @@ public class EstudianteController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('BIBL','COOR', 'ADMIN')")
     public List<Estudiante> getEstudiantes(
             @RequestParam(value = "primerNombre", required = false) String primerNombre,
             @RequestParam(value = "primerApellido", required = false) String primerApellido
@@ -39,6 +42,7 @@ public class EstudianteController {
     }
     // este metodo podria reemplazar a la lista de Estudiante getEstudiantes
     @GetMapping("/paged")
+    @PreAuthorize("hasAnyRole('BIBL','COOR', 'ADMIN')")
     public Page<Estudiante> getEstudiantes(@PageableDefault(size = 3, page = 0)Pageable pageable) {
         // size = tamano pagina
         // size = numero pagina
@@ -69,6 +73,7 @@ public class EstudianteController {
     }
 
     @PutMapping("{estudianteId}/libros/{libroId}")
+    @PreAuthorize("hasAnyRole('BIBL', 'ADMIN')")
     public Estudiante agregarLibroEstudiante(@PathVariable Long estudianteId, @PathVariable Long libroId){
         return estudianteService.agregarLibroEstudiante(estudianteId,libroId);
     }
@@ -78,6 +83,7 @@ public class EstudianteController {
         return estudianteService.agregarMateriaEstudiante(estudianteId,materiaId);
     }
     @PutMapping("{estudianteId}/cuentas/{cuentaId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public Estudiante agregarCuentaEstudiante(@PathVariable Long estudianteId, @PathVariable Long cuentaId){
         return estudianteService.agregarCuentaEstudiante(estudianteId,cuentaId);
     }

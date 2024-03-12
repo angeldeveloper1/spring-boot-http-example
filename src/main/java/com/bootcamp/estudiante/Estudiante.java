@@ -106,8 +106,8 @@ public class Estudiante {
         libros.remove(libro);
     }
 
-    public CuentaBancaria getCuenta() {
-        return cuenta;
+    public long getCuenta() {
+        return cuenta.getId();
     }
 
     public void setCuenta(CuentaBancaria cuenta) {

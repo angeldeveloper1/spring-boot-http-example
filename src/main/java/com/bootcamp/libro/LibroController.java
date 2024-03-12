@@ -6,10 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/libros")
+@PreAuthorize("hasAnyRole('BIBL','ADMIN')")
 public class LibroController {
 
     private final LibroService libroService;
@@ -20,10 +22,12 @@ public class LibroController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('COOR', 'BIBL','ADMIN')")
     public Page<Libro> getLibros(@PageableDefault(size = 3, page = 0)Pageable pageable) {
         return libroService.getAllLibros(pageable);
     }
     @GetMapping("{libroId}")
+    @PreAuthorize("hasAnyRole('COOR', 'BIBL','ADMIN')")
     public Libro getLibro(@PathVariable Long libroId){
         return libroService.getLibro(libroId);
     }
