@@ -67,14 +67,19 @@ public class EstudianteController {
     public Estudiante updateEstudiante(@PathVariable("id") Long estudianteId, @RequestBody Estudiante estudiante) {
         return estudianteService.updateEstudiante(estudianteId, estudiante);
     }
-    @PostMapping("{estudianteId}/libros")
-    public Estudiante agregarLibroEstudiante(@PathVariable Long estudianteId, @RequestBody Libro libro){
-        return estudianteService.agregarLibroEstudiante(estudianteId,libro);
+
+    @PutMapping("{estudianteId}/libros/{libroId}")
+    public Estudiante agregarLibroEstudiante(@PathVariable Long estudianteId, @PathVariable Long libroId){
+        return estudianteService.agregarLibroEstudiante(estudianteId,libroId);
     }
 
-    @PostMapping("{estudianteId}/materias")
-    public Estudiante agregarMateriaEstudiante(@PathVariable Long estudianteId, @RequestBody Materia materia){
-        return estudianteService.agregarMateriaEstudiante(estudianteId,materia);
+    @PutMapping("{estudianteId}/materias/{materiaId}")
+    public Estudiante agregarMateriaEstudiante(@PathVariable Long estudianteId, @PathVariable Long materiaId){
+        return estudianteService.agregarMateriaEstudiante(estudianteId,materiaId);
+    }
+    @PutMapping("{estudianteId}/cuentas/{cuentaId}")
+    public Estudiante agregarCuentaEstudiante(@PathVariable Long estudianteId, @PathVariable Long cuentaId){
+        return estudianteService.agregarCuentaEstudiante(estudianteId,cuentaId);
     }
 
 }

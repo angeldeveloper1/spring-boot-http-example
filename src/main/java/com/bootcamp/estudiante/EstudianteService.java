@@ -1,8 +1,11 @@
 package com.bootcamp.estudiante;
 
+import com.bootcamp.cuenta.CuentaBancaria;
+import com.bootcamp.cuenta.CuentaBancariaRepository;
 import com.bootcamp.libro.Libro;
 import com.bootcamp.libro.LibroRepository;
 import com.bootcamp.materia.Materia;
+import com.bootcamp.materia.MateriaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
@@ -22,12 +24,17 @@ public class EstudianteService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EstudianteService.class);
     private EstudianteRepository estudianteRepository;
     private final LibroRepository libroRepository;
+    private final MateriaRepository materiaRepository;
+    private final CuentaBancariaRepository cuentaBancariaRepository;
 
     @Autowired
-    public EstudianteService(EstudianteRepository estudianteRepository,
-                             LibroRepository libroRepository) {
+    public EstudianteService(EstudianteRepository estudianteRepository, LibroRepository libroRepository,
+                             MateriaRepository materiaRepository,
+                             CuentaBancariaRepository cuentaBancariaRepository) {
         this.estudianteRepository = estudianteRepository;
         this.libroRepository = libroRepository;
+        this.materiaRepository = materiaRepository;
+        this.cuentaBancariaRepository = cuentaBancariaRepository;
     }
 
     @Transactional(readOnly = true)
@@ -145,23 +152,41 @@ public class EstudianteService {
         ).asPredicate().test(email);
     }
 
-    public Estudiante agregarLibroEstudiante(Long estudianteId, Libro libro) {
+    public Estudiante agregarLibroEstudiante(Long estudianteId, Long libroId) {
         // check si estudiante con ese id existe, si no botamos un error
 
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
 
-        libro.setEstudiante(estudianteExistente);
-        libroRepository.save(libro);
+        Libro libroExistente = libroRepository.findById(libroId)
+                .orElseThrow(() -> new NoSuchElementException("Libro con ese id no existe, id: " + libroId));
+
+        libroExistente.setEstudiante(estudianteExistente);
         return estudianteExistente;
     }
-    public Estudiante agregarMateriaEstudiante(Long estudianteId, Materia materia) {
+    public Estudiante agregarMateriaEstudiante(Long estudianteId, Long materiaId) {
         // check si estudiante con ese id existe, si no botamos un error
 
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
 
-        estudianteExistente.addMateria(materia);
+        Materia materiaExistente = materiaRepository.findById(materiaId)
+                .orElseThrow(() -> new NoSuchElementException("Materia con ese id no existe, ID: " + materiaId));
+
+        estudianteExistente.addMateria(materiaExistente);
         return estudianteExistente;
+    }
+
+    public Estudiante agregarCuentaEstudiante(Long estudianteId, Long cuentaId) {
+
+        Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
+                .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, ID: " + estudianteId));
+
+        CuentaBancaria cuentaExistente = cuentaBancariaRepository.findById(cuentaId)
+                .orElseThrow(() -> new NoSuchElementException("Cuenta con ese id no existe, ID: " + cuentaId));
+
+        estudianteExistente.setCuenta(cuentaExistente);
+        return estudianteExistente;
+
     }
 }
