@@ -106,7 +106,7 @@ public class Estudiante {
         libros.remove(libro);
     }
 
-    public long getCuenta() {
+    public Long getCuenta() {
         return cuenta.getId();
     }
 

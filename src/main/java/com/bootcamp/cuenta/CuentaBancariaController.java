@@ -24,7 +24,7 @@ public class CuentaBancariaController{
     public CuentaBancariaController(CuentaBancariaService cuentaBancariaService) {
         this.cuentaBancariaService = cuentaBancariaService;
     }
-    @GetMapping
+    @GetMapping("/paged")
     public Page<CuentaBancaria> getCuentaBancarias(@PageableDefault(size = 3, page = 0)Pageable pageable){
         return cuentaBancariaService.getAllCuentas(pageable);
     }
